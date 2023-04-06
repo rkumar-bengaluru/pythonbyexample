@@ -2,6 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import shutil
 import zipfile
+from urllib import request
 
 def walk_dir(root_dir):
     """
@@ -38,7 +39,7 @@ def download_file(file_name):
     file_to_download = file_name.split('/')[-1]
     if os.path.exists(file_to_download) == False:
         print(f'downloading file {file_to_download}')
-        !python - m  wget {file_name}
+        request.urlretrieve(file_name,file_to_download)
     else:
         print(f'file already exists {file_to_download}')
 
