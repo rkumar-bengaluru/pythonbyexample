@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as plt
-
+import shutil
+import zipfile
 
 def walk_dir(root_dir):
     """
@@ -32,3 +33,33 @@ def plot_loss_and_accuracy(history):
     axes[1].set(xlabel='epochs', ylabel='Accuracy')
 
     plt.legend()
+
+def download_file(file_name):
+    file_to_download = file_name.split('/')[-1]
+    if os.path.exists(file_to_download) == False:
+        print(f'downloading file {file_to_download}')
+        !python - m  wget {file_name}
+    else:
+        print(f'file already exists {file_to_download}')
+
+
+def unzip_file(file_name):
+    file_to_unzip = file_name.split('/')[-1]
+    zip_ref = zipfile.ZipFile(file_to_unzip)
+    zip_ref.extractall()
+    zip_ref.close()
+
+
+def clean_up(file_name):
+    file = file_name.split('/')[-1]
+    dir_name = file.split('.')[0]
+    # remove file
+    if os.path.exists(file):
+        print(f'removing file and directory {file}')
+        os.remove(file)
+    else:
+        print(f'file does not exist {file}')
+    # remove dir
+    if os.path.exists(dir_name):
+        print(f'directory exists {dir_name}')
+        shutil.rmtree(dir_name)
